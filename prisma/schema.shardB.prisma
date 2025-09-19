@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/shardB"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_SHARD_B")
+  schemas = ["public", "productsData"]
+}
+
+enum Category {
+  ELECTRONICS
+  FASHION
+  HOME
+  BEAUTY
+  SPORTS
+  TOYS
+  BOOKS
+  OTHER
+
+  @@map("categories")
+  @@schema("productsData")
+}
+
+model Product {
+  id          Int   @id @default(autoincrement())
+  name        String
+  category    Category @default(OTHER)
+  description String?  @db.VarChar(500)
+  price       Float
+  stock       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  OrderB OrderB[]
+
+  @@map("products")
+  @@schema("productsData")
+}
+
+model OrderB {
+  id         Int   @id @default(autoincrement())
+  productId  Int
+  quantity   Int      @default(1)
+  totalPrice Float
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  product   Product   @relation (fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("orders_b")
+  @@schema("productsData")
+}
