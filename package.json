@@ -5,18 +5,21 @@
   "type": "module",
   "dependencies": {
     "@prisma/client": "^6.16.2",
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "pg": "^8.11.3",
     "prisma": "^6.16.2"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "ts-node-dev --respawn ./src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-
     "generate:shardA": "prisma generate --schema=prisma/schema.shardA.prisma",
     "generate:shardB": "prisma generate --schema=prisma/schema.shardB.prisma",
     "generate:all": "npm run generate:shardA && npm run generate:shardB"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.5.2",
+    "ts-node-dev": "^2.0.0"
   }
 }
-
