@@ -3,12 +3,11 @@ FROM node:20 AS builder
 
 WORKDIR /app
 
-# Copia os manifests primeiro (cache melhor)
 COPY package*.json ./
 
 RUN npm install
 
-# Copia código + schemas Prisma
+# Copia código + schemas + config
 COPY prisma ./prisma
 COPY src ./src
 COPY tsconfig.json ./
@@ -25,8 +24,10 @@ FROM node:20-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
+# Copia apenas o necessário
+COPY package*.json ./
+RUN npm install --omit=dev
+
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/src/generated ./src/generated
 
