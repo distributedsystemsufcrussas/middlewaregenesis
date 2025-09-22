@@ -1,7 +1,8 @@
 import express from "express";
-import { userService } from "./services/userService";
-import { productService } from "./services/productService";
-import { orderService } from "./services/orderService";
+import { userService } from "./services/userService.js";
+import { productService } from "./services/productService.js";
+import { orderService } from "./services/orderService.js";
+
 
 const app = express();
 app.use(express.json());

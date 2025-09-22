@@ -1,4 +1,4 @@
-import { prismaShardA } from "../config/prismaClients";
+import { prismaShardA } from "../config/prismaClients.js";
 
 export const userService = {
   async createUser(data: { email: string; name: string }) {

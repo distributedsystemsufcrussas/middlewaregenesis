@@ -1,4 +1,5 @@
-import { prismaShardA, prismaShardB } from "../config/prismaClients";
+import { prismaShardA, prismaShardB } from "../config/prismaClients.js";
+import { OrderA } from "../generated/shardA/index.js";
 
 export const orderService = {
   async createOrder(data: { userId: number; productId: number }) {
@@ -39,7 +40,7 @@ export const orderService = {
     const ordersA = await prismaShardA.orderA.findMany();
     const ordersB = await prismaShardB.orderB.findMany();
 
-    return ordersA.map((oa, i) => {
+    return ordersA.map((oa: OrderA, i:number) => {
       const ob = ordersB[i];
       return {
         id: `${oa.id}-${ob.id}`,

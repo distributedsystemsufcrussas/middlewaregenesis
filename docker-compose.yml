@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  middleware:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL_SHARDA: ${DATABASE_URL_SHARDA}
+      DATABASE_URL_SHARDB: ${DATABASE_URL_SHARDB}
+    depends_on:
+      - db-shard-a
+      - db-shard-b
+    networks:
+      - my_network
+
+  db-shard-a:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: shard_a_db
+    volumes:
+      - postgres_data_a:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+  db-shard-b:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: shard_b_db
+    volumes:
+      - postgres_data_b:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+volumes:
+  postgres_data_a:
+  postgres_data_b:
+
+networks:
+  my_network:
+    driver: bridge

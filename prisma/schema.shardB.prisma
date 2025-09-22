@@ -2,11 +2,12 @@ generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/shardB"
   previewFeatures = ["multiSchema"]
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL_SHARD_B")
+  url      = env("DATABASE_URL_SHARDB")
   schemas = ["public", "productsData"]
 }
 

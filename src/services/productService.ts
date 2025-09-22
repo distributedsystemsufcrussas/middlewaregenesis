@@ -1,4 +1,4 @@
-import { prismaShardB } from "../config/prismaClients";
+import { prismaShardB } from "../config/prismaClients.js";
 
 export const productService = {
   async createProduct(data: { name: string; price: number }) {
