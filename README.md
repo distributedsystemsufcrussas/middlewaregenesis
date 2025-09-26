@@ -24,17 +24,18 @@ So, the strategy is to duplicate the `Order` table:
 
 The middleware joins two infos whan the complete order is requested.
 
-## Fluxo de funcionamento
+## Workflux 
 
-1. **App Cliente** → chama o middleware  
-2. **Middleware** → decide em qual shard fazer a operação  
-3. **Prisma Clients** → conectam a shardA ou shardB  
-4. Resultado é unificado e devolvido para o cliente.
+1. **Client App** → Calls middleware  
+2. **Middleware** → decides on which shard do the query  
+3. **Prisma Clients** → conects to shardA or shardB  
+4. Result is unified and sent back to client.
 
-## Como rodar
+## Commands
 
 ```bash
 npm install
+npx tsc -init
 npx prisma generate --schema=prisma/schema.shardA.prisma
 npx prisma generate --schema=prisma/schema.shardB.prisma
 npm run dev
